@@ -210,13 +210,14 @@
 //-------------------------------------
 // Computed link quantities
 //-------------------------------------
- #define MAX_LINK_RESULTS 6
+ #define MAX_LINK_RESULTS 7
  enum LinkResultType {
       LINK_FLOW,                       // flow rate
       LINK_DEPTH,                      // flow depth
       LINK_VELOCITY,                   // flow velocity
       LINK_VOLUME,                     // link volume
       LINK_CAPACITY,                   // ratio of area to full area
+      LINK_HYDRAD,                     // hydraulic radius
       LINK_QUAL};                      // concentration of each pollutant
 
 //-------------------------------------

@@ -684,18 +684,26 @@ void link_getResults(int j, double f, float x[])
            q,                     // flow
            u,                     // velocity
            v,                     // volume
-           c;                     // capacity, setting or concentration
+           c,                     // capacity, setting or concentration
+           r,                     // hydraulic radius
+           a;                     // area
     double f1 = 1.0 - f;
 
     y = f1*Link[j].oldDepth + f*Link[j].newDepth;
     q = f1*Link[j].oldFlow + f*Link[j].newFlow;
     v = f1*Link[j].oldVolume + f*Link[j].newVolume;
     u = link_getVelocity(j, q, y);
+    //xsect_getRofA
+    //r = f1*Link[j]. + f*Link[j].newVolume
     c = 0.0;
+    a = -999.0;
+    r = -999.0;
     if (Link[j].type == CONDUIT)
     {
         if (Link[j].xsect.type != DUMMY)
-            c = xsect_getAofY(&Link[j].xsect, y) / Link[j].xsect.aFull;
+            a = xsect_getAofY(&Link[j].xsect, y);
+            c = a / Link[j].xsect.aFull;
+            r = xsect_getRofA(&Link[j].xsect, a);
     }
     else c = Link[j].setting;
 
@@ -710,11 +718,13 @@ void link_getResults(int j, double f, float x[])
     v *= UCF(VOLUME);
     q *= UCF(FLOW) * (double)Link[j].direction;
     u *= UCF(LENGTH) * (double)Link[j].direction;
+    r *= UCF(LENGTH);
     x[LINK_DEPTH]    = (float)y;
     x[LINK_FLOW]     = (float)q;
     x[LINK_VELOCITY] = (float)u;
     x[LINK_VOLUME]   = (float)v;
     x[LINK_CAPACITY] = (float)c;
+    x[LINK_HYDRAD]   = (float)r;
 
     if ( !IgnoreQuality ) for (p = 0; p < Nobjects[POLLUT]; p++)
     {

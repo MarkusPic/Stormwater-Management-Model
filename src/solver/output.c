@@ -372,6 +372,8 @@ int output_open()
     fwrite(&k, sizeof(INT4), 1, Fout.file);
     k = LINK_CAPACITY;
     fwrite(&k, sizeof(INT4), 1, Fout.file);
+    k = LINK_HYDRAD;
+    fwrite(&k, sizeof(INT4), 1, Fout.file);
     for (j=0; j<NumPolluts; j++)
     {
         k = LINK_QUAL + j;
