@@ -2,6 +2,10 @@
 
 Stormwater Management Model (aka "SWMM") solver only
 
+## Changes in this repository
+
+- added the hydraulic radius to the variables for links in the output file
+
 ## Introduction
 This is the open source SWMM source code repository maintained by the Open
 Water Analytics group.
