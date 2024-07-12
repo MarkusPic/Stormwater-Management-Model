@@ -10,13 +10,13 @@ Stormwater Management Model (aka "SWMM") solver only
 
 Calculating the shear stress in the conduits.
 
-$$\tau = \rho * g * r_{hydr} * J_{so}$$
+$$\tau = \rho * g * r_{hydr} * S_{o}$$
 with:
-- $\tau$ ... shear stress in N/m2
-- $\rho$ ... density of water = 1000 kg/m3
-- $g$ ... gravity = 9.81 m/s2
-- $r_{hydr}$ ... hydraulic radius in m
-- $J_{so}$ ... slope in m/m
+- $\tau$ ... shear stress in $N/m^2$
+- $\rho$ ... density of water = 1000 $kg/m^3$
+- $g$ ... gravity = 9.81 $m/s^2$
+- $r_{hydr}$ ... hydraulic radius in $m$
+- $S_o$ ... conduit bed slope in $m/m$
 
 ```python
 from numpy import nan
