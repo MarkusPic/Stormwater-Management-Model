@@ -185,6 +185,7 @@ typedef struct
    double        timeCourantCritical;
    long          flowTurns;
    int           flowTurnSign;
+   double        maxShearStress;
 }  SM_LinkStats;
 
 /** @struct SM_PumpStats

@@ -693,8 +693,6 @@ void link_getResults(int j, double f, float x[])
     q = f1*Link[j].oldFlow + f*Link[j].newFlow;
     v = f1*Link[j].oldVolume + f*Link[j].newVolume;
     u = link_getVelocity(j, q, y);
-    //xsect_getRofA
-    //r = f1*Link[j]. + f*Link[j].newVolume
     c = 0.0;
     a = -999.0;
     r = -999.0;
@@ -850,6 +848,34 @@ double link_getVelocity(int j, double flow, double depth)
         if (area > FUDGE ) veloc = flow / area;
     }
     return veloc;
+}
+
+//=============================================================================
+
+double link_getShearStress(int j, double depth)
+//
+//  Input:   j     = link index
+//           depth = link flow depth (ft)
+//  Output:  returns shear stress (N/m2)
+//  Purpose: finds flow velocity given flow and depth.
+//
+{
+    double area, slope, r_hyd;
+    double shear_stress = -999.0;
+    int    k;
+
+    if ( depth <= 0.01 ) return 0.0;
+    if ( Link[j].type == CONDUIT )
+    {
+        k = Link[j].subIndex;
+        slope = Conduit[k].slope;  // no unit
+
+        r_hyd = xsect_getRofY(&Link[j].xsect, depth)*0.3048;  // ft to m
+        shear_stress = 1000*SI_GRAVITY*r_hyd*slope;  // N/m2
+        // density of water in 1000 kg/m3
+        // m/s2
+    }
+    return shear_stress;
 }
 
 //=============================================================================

@@ -206,6 +206,7 @@ int  stats_open()
             LinkStats[j].timeInFlowClass[k] = 0.0;
         LinkStats[j].flowTurns = 0;
         LinkStats[j].flowTurnSign = 0;
+        LinkStats[j].maxShearStress = 0.0;
     }
 
     // --- allocate memory for & initialize storage unit statistics
@@ -656,6 +657,7 @@ void  stats_updateLinkStats(int j, double tStep, DateTime aDate)
     int    k;
     double q, v;
     double dq;
+    double s;
 
     // --- update max. flow
     dq = Link[j].newFlow - Link[j].oldFlow;
@@ -671,6 +673,13 @@ void  stats_updateLinkStats(int j, double tStep, DateTime aDate)
     if ( v > LinkStats[j].maxVeloc )
     {
         LinkStats[j].maxVeloc = v;
+    }
+
+    // --- update max. shear stress
+    s = link_getShearStress(j, Link[j].newDepth);
+    if ( s > LinkStats[j].maxShearStress )
+    {
+        LinkStats[j].maxShearStress = s;
     }
 
     // --- update max. depth

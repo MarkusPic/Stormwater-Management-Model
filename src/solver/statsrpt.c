@@ -71,6 +71,7 @@ void    writeOutfallLoads(void);
 void    writeLinkFlows(void);
 void    writeFlowClass(void);
 void    writeLinkSurcharge(void);
+void    writeShearStress(void);
 void    writePumpFlows(void);
 void    writeLinkLoads(void);
 
@@ -123,6 +124,7 @@ void statsrpt_writeReport()
         writeLinkFlows();
         writeFlowClass();
         writeLinkSurcharge();
+        writeShearStress();
         writePumpFlows();
         if ( Nobjects[POLLUT] > 0 && !IgnoreQuality) writeLinkLoads();
     }
@@ -856,6 +858,44 @@ void writeLinkSurcharge()
                 t[0], t[1], t[2], t[3], t[4]);
     }
     if ( n == 0 ) WRITE("No conduits were surcharged.");
+    WRITE("");
+}
+
+//=============================================================================
+
+void writeShearStress()
+//
+//  Input:   none
+//  Output:  none
+//  Purpose: writes maximum shear stress for each conduit to report file.
+//
+{
+    int   j;
+    double s;
+
+    if ( RouteModel != DW ) return;
+    WRITE("");
+    WRITE("****************************");
+    WRITE("Conduit Shear Stress Summary");
+    WRITE("****************************");
+    WRITE("");
+    fprintf(Frpt.file,
+            "\n  ---------------------------------"
+            "\n                            Maximum"
+            "\n                       shear stress"
+            "\n  Conduit                      N/m2"
+            "\n  ---------------------------------");
+    for ( j = 0; j < Nobjects[LINK]; j++ )
+    {
+        if ( Link[j].type != CONDUIT ) continue;
+        if ( Link[j].xsect.type == DUMMY ) continue;
+        fprintf(Frpt.file, "\n  %-20s", Link[j].ID);
+
+        s = LinkStats[j].maxShearStress;  // always in N/m2
+        //if (s > 50.0) fprintf(Frpt.file, "    >50.00");
+        //else
+        fprintf(Frpt.file, "  %11.2f", s);
+    }
     WRITE("");
 }
 

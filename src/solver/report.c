@@ -233,6 +233,7 @@ void report_writeLogo()
         TOOLKIT_VERSION, BUILD_ID);
 
     fprintf(Frpt.file, "%s", Msg);
+    fprintf(Frpt.file, "%s", "\n  Custom extension - hydraulic radius + shear stress");
     fprintf(Frpt.file, FMT09);
     fprintf(Frpt.file, FMT10);
     time(&SysTime);                    // Save starting wall clock time

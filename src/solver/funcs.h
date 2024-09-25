@@ -425,6 +425,7 @@ double  link_getLength(int link);
 double  link_getYcrit(int link, double q);
 double  link_getYnorm(int link, double q);
 double  link_getVelocity(int link, double q, double y);
+double  link_getShearStress(int link, double y);
 double  link_getFroude(int link, double v, double y);
 double  link_getPower(int link);
 double  link_getLossRate(int link, int routeModel, double q, double tstep);
